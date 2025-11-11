@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  ansible-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    container_name: ansible-dev
+    hostname: ansible-dev
+    
+    # Keep container running - need to look more into this
+    command: sleep infinity
+    
+    volumes:
+      # Your ansible projects/playbooks - going to adjust this later everything else worked flawessly
+      - ./workspace:/workspace
+      
+      # SSH keys from host (read-only for security)
+      - ~/.ssh:/home/devuser/.ssh:ro
+      
+      # Git config
+      - ~/.gitconfig:/home/devuser/.gitconfig:ro
+      
+      # Persistent Ansible data (collections, cached facts, etc)
+      - ansible-data:/home/devuser/.ansible
+    
+    # Network mode: host allows easier access to local network devices
+    # Change to 'bridge' if you prefer isolation - need to look more into this
+    network_mode: host
+
+volumes:
+  ansible-data:
+    driver: local
