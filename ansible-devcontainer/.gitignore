@@ -1,0 +1,20 @@
+# Environment and secrets
+.env
+*.secret
+*.key
+*.pem
+
+# Contains inventory/IPs
+workspace/
+
+# Docker volumes and state
+ansible-data/
+
+# Ansible
+*.retry
+.ansible/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
